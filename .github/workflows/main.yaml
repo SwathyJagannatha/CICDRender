@@ -1,4 +1,4 @@
-name: Flask Testing CI
+name: Flask CI/CD
 
 on:
   push:
@@ -56,7 +56,7 @@ jobs:
           python -m pip install -r requirements.txt
       
       - name: Run the tests
-        run: python -m unittest discover -s tests -p "test_*.py"
+        run: python -m unittest discover -s tests -p 'test_*.py'
 
   deploy:
     needs: test
@@ -64,6 +64,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
         - name: Deploy the App
-        env:
+          env:
             deploy_url: ${{secrets.RENDER_DEPLOY_HOOK_URL}}
-        run: curl "$deploy_url"
+          run: curl "$deploy_url"
